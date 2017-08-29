@@ -20,11 +20,10 @@ namespace CPE200Lab1
         private string secondOperand;
         private string operate;
         CalculatorEngine engine;
-        double Mpluse;
+        double Mplus;
         double Mminus;
         double sum = 0;
-
-
+        private double memory;
 
         private void resetAll()
         {
@@ -33,9 +32,8 @@ namespace CPE200Lab1
             hasDot = false;
             isAfterOperater = false;
             isAfterEqual = false;
-            firstOperand = null;
             sum = 0;
-
+            firstOperand = null;
         }
 
 
@@ -110,31 +108,17 @@ namespace CPE200Lab1
             {
                 return;
             }
+
             string result = engine.calculate(operate, firstOperand, secondOperand);
             string temp = operate;
-
-            if(firstOperand != null)
-            {
-                string secondOperand = lblDisplay.Text;
-                string result = engine.calculate(operate, firstOperand, secondOperand);
-                if (result is "E" || result.Length > 8)
-                {
-                    lblDisplay.Text = "Error";
-                }
-                else
-                {
-                    lblDisplay.Text = result;
-                }
-            }
             operate = ((Button)sender).Text;
+
             switch (operate)
             {
                 case "+":
                 case "-":
                 case "X":
                 case "÷":
-
-
                     if (firstOperand == null)
                     {
                         firstOperand = lblDisplay.Text;
@@ -168,8 +152,8 @@ namespace CPE200Lab1
                     break;
 
                 case "M+":
-                    Mpluse = Convert.ToDouble(lblDisplay.Text);
-                    sum = sum + Mpluse;
+                    Mplus = Convert.ToDouble(lblDisplay.Text);
+                    sum = sum + Mplus;
                     isAfterOperater = true;
                     break;
 
@@ -183,7 +167,6 @@ namespace CPE200Lab1
 
                     isAfterOperater = true;
                     break;
-
             }
             isAllowBack = false;
         }
@@ -290,7 +273,7 @@ namespace CPE200Lab1
 
         private void btnMP_Click(object sender, EventArgs e)
         {
-            if(lblDisplay.Text is "Error")
+            if (lblDisplay.Text is "Error")
             {
                 return;
             }
@@ -301,11 +284,12 @@ namespace CPE200Lab1
         private void btnMC_Click(object sender, EventArgs e)
         {
             memory = 0;
+            resetAll();
         }
 
         private void btnMM_Click(object sender, EventArgs e)
         {
-            if(lblDisplay.Text is "Error")
+            if (lblDisplay.Text is "Error")
             {
                 return;
             }
@@ -315,27 +299,11 @@ namespace CPE200Lab1
 
         private void btnMR_Click(object sender, EventArgs e)
         {
-            if(lblDisplay.Text is "error")
+            if (lblDisplay.Text is "error")
             {
                 return;
             }
             lblDisplay.Text = memory.ToString();
-        }
-
-        private void lblDisplay_Click(object sender, EventArgs e)
-        {
-
-        }
-
-       
-        private void button3_Click(object sender, EventArgs e)
-        {
-            resetAll();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            lblDisplay.Text = sum.ToString();
         }
     }
 }
